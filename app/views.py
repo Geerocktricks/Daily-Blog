@@ -11,3 +11,10 @@ def index():
     title = 'Home - my personal blog'
     intro = 'Daily Blog'
     return render_template('index.html', title = title , intro = intro)
+
+@app.route('/about')
+def about():
+    '''
+    about root page that returns its data
+    '''
+    return render_template('about.html')
