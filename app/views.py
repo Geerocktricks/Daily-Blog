@@ -7,6 +7,15 @@ from passlib.hash import sha256_crypt
 
 Articles = Articles()
 
+# config MySQL
+app.config['MySQL_HOST'] = 'localhost'
+app.config['MySQL_USER'] = 'root'
+app.config['MySQL_PASSWORD'] = '1921'
+app.config['MySQL_DB'] = 'DailyBlog'
+app.config['MySQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
+
 # Views
 @app.route('/')
 def index():
@@ -58,5 +67,20 @@ def register():
     '''
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        
+        name = form.name.data
+        email = form.email.data
+        username = form.username.data
+        password = sha256_crypt.encrypt(str(form.password.data))
+
+        curl = mysql.connection.cursor()
+
+        cur.execute("INSERT INTO users(name, email, username, password)VALUES(%s,%s,%s,%s)", (name , email, username, password))
+
+        #  commit to DB
+        mysql.connection.commit()
+
+        #  close connection
+        cur.close()
+
+        return render_template('register.html' , form = form)
     return render_template('register.html' , form = form)
