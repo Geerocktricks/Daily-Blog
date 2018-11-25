@@ -1,4 +1,4 @@
-from flask import Flask , flash , redirect, url_for , session ,logging
+from flask import Flask , flash , redirect, url_for , request, session ,logging
 from flask_bootstrap import Bootstrap
 from .data import Articles
 from flask_mysqldb import MySQL

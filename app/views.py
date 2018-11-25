@@ -1,4 +1,4 @@
-from flask import render_template,Flask , flash , redirect, url_for , session ,logging
+from flask import render_template,Flask , flash , redirect, url_for ,request, session ,logging
 from app import app
 from .data import Articles
 from flask_mysqldb import MySQL
@@ -39,6 +39,8 @@ def article(id):
     '''
     return render_template('article.html' , id = id)
 
+# ________________________**____________Validation_________**_____________________________
+
 class RegisterForm(Form):
     name = StringField('Name' , [validators.Length(min=1, max=50)])
     username = StringField('Username' , [validators.Length(min = 4 ,max = 25)])
@@ -48,3 +50,13 @@ class RegisterForm(Form):
         validators.EqualTo('confirm', message = 'Passwords do not match')
     ])
     confirm = PasswordField('Confirm Password')
+
+@app.route('/register' , methods = ['GET' , 'POST'])
+def register():
+    '''
+    Register root page for registration
+    '''
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        
+    return render_template('register.html' , form = form)
