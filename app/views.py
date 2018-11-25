@@ -1,5 +1,8 @@
 from flask import render_template
 from app import app
+from .data import Articles
+
+Articles = Articles()
 
 # Views
 @app.route('/')
@@ -18,3 +21,17 @@ def about():
     about root page that returns its data
     '''
     return render_template('about.html')
+
+@app.route('/articles')
+def articles():
+    '''
+    articles root page that returns its data
+    '''
+    return render_template('articles.html' , articles = Articles)
+
+@app.route('/article/<string:id>/')
+def article(id):
+    '''
+    articles root page that returns its data
+    '''
+    return render_template('article.html' , id = id)
