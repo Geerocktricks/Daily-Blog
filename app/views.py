@@ -1,4 +1,4 @@
-from flask import render_template,Flask , flash , redirect, url_for ,request, session ,logging
+from flask import render_template,Flask , flash , redirect, url_for ,request, session , logging
 from app import app
 from .data import Articles
 from flask_mysqldb import MySQL
@@ -72,7 +72,7 @@ def register():
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data))
 
-        curl = mysql.connection.cursor()
+        cur = mysql.connection.cursor()
 
         cur.execute("INSERT INTO users(name, email, username, password)VALUES(%s,%s,%s,%s)", (name , email, username, password))
 
@@ -82,5 +82,55 @@ def register():
         #  close connection
         cur.close()
 
-        return render_template('register.html' , form = form)
+        flash('Succesfully Registered!!' , 'success')
+        return redirect(url_for('login'))
     return render_template('register.html' , form = form)
+
+#user login
+@app.route('/login', methods = ['GET' , 'POST'])
+def login():
+    '''
+    Login root page for registration
+    '''
+    # if request.method == 'POST':
+    #     username = request.form['username']
+    #     password_candidate = request.form['password']
+
+    #     cur = mysql.connection.cursor()
+
+    #     result = cur.execute("SELECT * FROM users WHERE username = %s", [username])
+
+    #     if result > 0:
+    #         data = cur.fetchone()
+    #         password = data['password']
+
+    #         if sha256_crypt.verify(password_candidate, password):
+    #             session['logged_in'] = True
+    #             session['username'] = username
+
+    #             flash('You are now logged in', 'success')
+    #             return redirect(url_for('dashboard'))
+    #         else:
+    #             error = 'Invalid Login'
+    #             return render_template( 'login.html' , error = error )
+    #     else:
+    #         error = 'usernanme not found'
+    #         return render_template( 'login.html' , error = error )
+        
+    #     cur.close()
+    return render_template( 'login.html' )
+
+    
+
+# logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You are now logged out ', 'success')
+    return redirect(url_for('login'))
+
+@app.route('/dashboard') 
+def dashboard():
+    return render_template('dashboard.html')
+
+# app.secret_key = '1921'

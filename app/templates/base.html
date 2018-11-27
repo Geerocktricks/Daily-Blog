@@ -12,10 +12,12 @@
         {% extends 'bootstrap/base.html'%}
     </head>
     <body>
-     
+        
         <div class="container">
                 {% include 'navbar.html' %}
+                
             <div class="row col-md-12 bg-danger"> 
+                {% include '_messages.html' %}
                 {% block body %}
                 
                 {% endblock%}
