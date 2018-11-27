@@ -60,7 +60,7 @@ python manage.py server
 Open the app on your browser, by default on 127.0.0.1:5000.
 
 ## Known Bugs
-There are currently no known bugs at the momennt
+Login has an issue 
 ## Technologies Used
 * Python3.6
 * Flask
