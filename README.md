@@ -13,7 +13,7 @@ Daily blog helps you post blogs and let other people rate it. You create an acco
 * One should comment on the blogs
 
 ## Features
-* See various Pitch Categories.
+* See various Blogs.
 *  Post!
 * Comment on It!
 * Sign in / Sign Out
